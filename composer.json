@@ -47,7 +47,7 @@
                 "Androidbeet\\Nightbot\\NightbotServiceProvider"
             ],
             "aliases": {
-                "LaravelNightbot": "Androidbeet\\Nightbot\\NightbotFacade"
+                "Nightbot": "Androidbeet\\Nightbot\\NightbotFacade"
             }
         }
     }
