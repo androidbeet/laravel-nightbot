@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @see \Androidbeet\LaravelNightbot\Skeleton\SkeletonClass
  */
-class LaravelNightbotFacade extends Facade
+class NightbotFacade extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -16,6 +16,6 @@ class LaravelNightbotFacade extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'laravel-nightbot';
+        return 'nightbot';
     }
 }

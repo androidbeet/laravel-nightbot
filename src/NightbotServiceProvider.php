@@ -4,7 +4,7 @@ namespace Androidbeet\LaravelNightbot;
 
 use Illuminate\Support\ServiceProvider;
 
-class LaravelNightbotServiceProvider extends ServiceProvider
+class NightbotServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -21,7 +21,7 @@ class LaravelNightbotServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config/config.php' => config_path('laravel-nightbot.php'),
+                __DIR__ . '/../config/nightbot.php' => config_path('nightbot.php'),
             ], 'config');
 
             // Publishing the views.
@@ -50,11 +50,11 @@ class LaravelNightbotServiceProvider extends ServiceProvider
     public function register()
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'laravel-nightbot');
+        $this->mergeConfigFrom(__DIR__ . '/../config/nightbot.php', 'nightbot');
 
         // Register the main class to use with the facade
-        $this->app->singleton('laravel-nightbot', function () {
-            return new LaravelNightbot;
+        $this->app->singleton('nightbot', function () {
+            return new Nightbot;
         });
     }
 }
