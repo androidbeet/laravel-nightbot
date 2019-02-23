@@ -1,0 +1,54 @@
+{
+    "name": "androidbeet/laravel-nightbot",
+    "description": "Bridge for https://nightbot.tv",
+    "keywords": [
+        "androidbeet",
+        "laravel-nightbot"
+    ],
+    "homepage": "https://github.com/androidbeet/laravel-nightbot",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Aleksandr Burov",
+            "email": "androidbeet@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "illuminate/support": "5.7.*"
+    },
+    "require-dev": {
+        "orchestra/testbench": "3.7.*",
+        "phpunit/phpunit": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Androidbeet\\LaravelNightbot\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Androidbeet\\LaravelNightbot\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Androidbeet\\LaravelNightbot\\LaravelNightbotServiceProvider"
+            ],
+            "aliases": {
+                "LaravelNightbot": "Androidbeet\\LaravelNightbot\\LaravelNightbotFacade"
+            }
+        }
+    }
+}
