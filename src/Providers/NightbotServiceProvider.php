@@ -3,6 +3,7 @@
 namespace Androidbeet\Nightbot\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Androidbeet\Nightbot\Nightbot;
 
 class NightbotServiceProvider extends ServiceProvider
 {
@@ -46,11 +47,9 @@ class NightbotServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Automatically apply the package configuration
         $this->mergeConfigFrom(__DIR__ . '/../../config/nightbot.php', 'nightbot');
 
-        // Register the main class to use with the facade
-        $this->app->singleton('nightbot', function () {
+        $this->app->singleton(Nightbot::class, function () {
             return new Nightbot;
         });
     }
