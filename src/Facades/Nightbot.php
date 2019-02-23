@@ -8,6 +8,6 @@ class Nightbot extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'nightbot';
+        return \Androidbeet\Nightbot\Nightbot::class;
     }
 }
