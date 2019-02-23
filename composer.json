@@ -44,10 +44,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Androidbeet\\LaravelNightbot\\LaravelNightbotServiceProvider"
+                "Androidbeet\\Nightbot\\NightbotServiceProvider"
             ],
             "aliases": {
-                "LaravelNightbot": "Androidbeet\\LaravelNightbot\\LaravelNightbotFacade"
+                "LaravelNightbot": "Androidbeet\\Nightbot\\NightbotFacade"
             }
         }
     }
