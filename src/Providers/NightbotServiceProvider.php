@@ -1,14 +1,11 @@
 <?php
 
-namespace Androidbeet\Nightbot;
+namespace Androidbeet\Nightbot\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
 class NightbotServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap the application services.
-     */
     public function boot()
     {
         /*
