@@ -1,6 +1,6 @@
 <?php
 
-namespace Androidbeet\LaravelNightbot\Tests;
+namespace Androidbeet\Nightbot\Tests;
 
 use PHPUnit\Framework\TestCase;
 

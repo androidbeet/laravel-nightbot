@@ -1,6 +1,6 @@
 <?php
 
-namespace Androidbeet\LaravelNightbot;
+namespace Androidbeet\Nightbot;
 
 class Nightbot
 {

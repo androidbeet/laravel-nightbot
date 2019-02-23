@@ -25,12 +25,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Androidbeet\\LaravelNightbot\\": "src"
+            "Androidbeet\\Nightbot\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Androidbeet\\LaravelNightbot\\Tests\\": "tests"
+            "Androidbeet\\Nightbot\\Tests\\": "tests"
         }
     },
     "scripts": {
