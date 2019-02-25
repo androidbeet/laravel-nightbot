@@ -9,33 +9,35 @@ class NightbotServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        /*
-         * Optional methods to load your package assets
-         */
-        // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'laravel-nightbot');
-        // $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravel-nightbot');
-        // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        // $this->loadRoutesFrom(__DIR__.'/routes.php');
+         $this->loadTranslationsFrom(__DIR__.'/../resources/langs', 'nightbot');
+         $this->loadViewsFrom(__DIR__.'/../resources/views', 'nightbot');
+         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+         $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../../config/nightbot.php' => config_path('nightbot.php'),
             ], 'config');
 
-            // Publishing the views.
-            /*$this->publishes([
-                __DIR__.'/../resources/views' => resource_path('views/vendor/laravel-nightbot'),
-            ], 'views');*/
+            $this->publishes([
+                __DIR__ . '/../resources/assets' => public_path('vendor/nightbot'),
+            ], 'public');
 
-            // Publishing assets.
-            /*$this->publishes([
-                __DIR__.'/../resources/assets' => public_path('vendor/laravel-nightbot'),
-            ], 'assets');*/
+            $this->publishes([
+                __DIR__ . '/../resources/views' => resource_path('views/vendor/nightbot'),
+            ], 'views');
 
-            // Publishing the translation files.
-            /*$this->publishes([
-                __DIR__.'/../resources/lang' => resource_path('lang/vendor/laravel-nightbot'),
-            ], 'lang');*/
+//            $this->publishes([
+//                __DIR__.'/../resources/assets' => public_path('vendor/nightbot'),
+//            ], 'assets');
+
+            $this->publishes([
+                __DIR__.'/../resources/langs' => resource_path('lang/vendor/nightbot'),
+            ], 'lang');
+
+            $this->publishes([
+                __DIR__.'/../database/migrations/' => database_path('migrations')
+            ], 'migrations');
 
             // Registering package commands.
             // $this->commands([]);
