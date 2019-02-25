@@ -1,7 +1,6 @@
 <?php
 
 namespace Androidbeet\Nightbot;
-use Illuminate\Support\Facades\Config;
 
 class Nightbot
 {
@@ -56,9 +55,10 @@ class Nightbot
      * @param string $method
      * @param string $url
      * @param array $parameters
-     * @return array
+     * @param array $headers
+     * @return mixed
      */
-    protected function curlRequest(string $method = 'GET', string $url, array $parameters = [])
+    protected function curlRequest(string $method = 'GET', string $url, array $parameters = [], array $headers = [])
     {
         $curl = curl_init();
 
@@ -68,7 +68,15 @@ class Nightbot
         if ($method == 'POST') {
             curl_setopt($curl, CURLOPT_POST, 1);
             curl_setopt($curl, CURLOPT_POSTFIELDS, $parameters);
+
+            $postHeaders = [
+                'Content-Type: application/x-www-form-urlencoded',
+            ];
+
+            $headers = array_merge($headers, $postHeaders);
         }
+
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
         $result = curl_exec($curl);
 
