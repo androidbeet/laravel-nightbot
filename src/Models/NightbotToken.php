@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace Androidbeet\Nightbot\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Nightbot extends Model
+class NightbotToken extends Model
 {
     public $guarded = [];
 }

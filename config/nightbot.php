@@ -5,6 +5,11 @@ return [
     /**
      *
      */
+    'contact_email' => 'androidbeet@gmail.com',
+
+    /**
+     *
+     */
     'client_id' => env('NIGHTBOT_CLIENT_ID', ''),
 
     /**

@@ -12,19 +12,19 @@
                 <div class="col-md-10 col-xl-10 mx-auto align-self-center mt-6">
 
                     <p class="lead-3 col-xl-9 col-md-9 mx-auto mt-6 mb-7">
-                        @lang('nightbot::auth.title')
+                        Спасибо, вы успешно активировали бота!
                     </p>
-                    <a href="{{ $url }}" style="background-color: #613f9f; color: white;" class="btn btn-xl fs-20 fw-500 w-350 shadow-3 hidden-sm-down border-glass-2" >
-                        @lang('nightbot::auth.button')
-                    </a>
+                    {{--<a href="{{ $url }}" style="background-color: #613f9f; color: white;" class="btn btn-xl fs-20 fw-500 w-350 shadow-3 hidden-sm-down border-glass-2" >--}}
+                        {{--@lang('nightbot::auth.button')--}}
+                    {{--</a>--}}
 
                 </div>
 
                 <div class="col-lg-8 mx-auto align-self-center pt-2">
 
-                    <a class="font-size-18" href="mail:{{ $email }}">
-                        {{ $email }}
-                    </a>
+                    {{--<a class="font-size-18" href="mail:{{ $email }}">--}}
+                        {{--{{ $email }}--}}
+                    {{--</a>--}}
 
                 </div>
             </div>
