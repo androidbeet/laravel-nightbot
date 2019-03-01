@@ -6,12 +6,18 @@ use Androidbeet\Nightbot\Facades\Nightbot;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Validation\ValidationException;
 use Androidbeet\Nightbot\Models\NightbotToken;
 
 
 class NightbotController extends Controller
 {
+    protected $token;
+
+    public function __construct()
+    {
+        $this->token = NightbotToken::class;
+    }
+
     /**
      * Show Auth Page
      *
@@ -19,11 +25,7 @@ class NightbotController extends Controller
      */
     public function showAuthPage()
     {
-        $token = Nightbot::getToken(1);
-
-        $channel = Nightbot::sendChannelMessage($token, 'Message from package');
-
-        dd($channel);
+          $token = $this->token::id(3);
 
         $url = Nightbot::getAuthURL();
 

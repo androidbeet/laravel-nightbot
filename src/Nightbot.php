@@ -6,6 +6,15 @@ use Androidbeet\Nightbot\Models\NightbotToken;
 
 class Nightbot
 {
+    public $client;
+
+    public function __construct()
+    {
+        $this->client = new \GuzzleHttp\Client([
+            'base_uri' => 'https://api.nightbot.tv/1/'
+        ]);
+    }
+
     /**
      * Return url for Nightbot OAuth2 authorization
      * Step 2 -> https://api-docs.nightbot.tv/#authorization-code-flow
@@ -33,7 +42,7 @@ class Nightbot
      * Step 4 -> https://api-docs.nightbot.tv/#authorization-code-flow
      *
      * @param string $code
-     * @return mixed
+     * @return array
      */
     public function getTokenData(string $code)
     {
@@ -45,9 +54,11 @@ class Nightbot
             'redirect_uri' => config('nightbot.redirect_url'),
         ];
 
-        $result = $this->curlRequest('POST', 'https://api.nightbot.tv/oauth2/token', $parameters);
+        $response = $this->client->request('POST', 'https://api.nightbot.tv/oauth2/token', [
+            'form_params' => $parameters,
+        ])->getBody();
 
-        return json_decode($result, true);
+        return json_decode($response->getContents(), true);
     }
 
     /**
@@ -61,65 +72,6 @@ class Nightbot
         $result = NightbotToken::findOrfail($id);
 
         return $result->access_token;
-    }
-
-
-    /**
-     * Send GET, POST requests
-     *
-     * @param string $method
-     * @param string $url
-     * @param array $parameters
-     * @param array $headers
-     * @return mixed
-     */
-    protected function curlRequest(string $method = 'GET', string $url, array $parameters = [], array $headers = [])
-    {
-        $curl = curl_init();
-
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_URL, $url);
-
-        if ($method == 'POST') {
-            curl_setopt($curl, CURLOPT_POST, 1);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($parameters));
-
-            $additionalHeaders = [
-                'Content-Type: application/x-www-form-urlencoded',
-            ];
-
-            $headers = array_merge($headers, $additionalHeaders);
-        }
-
-        if ($method == 'PUT') {
-            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
-            curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($parameters));
-
-            $additionalHeaders = [
-                'Content-Type: application/x-www-form-urlencoded',
-            ];
-
-            $headers = array_merge($headers, $additionalHeaders);
-        }
-
-        if ($method == 'DELETE') {
-            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
-            curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($parameters));
-
-            $additionalHeaders = [
-                'Content-Type: application/x-www-form-urlencoded',
-            ];
-
-            $headers = array_merge($headers, $additionalHeaders);
-        }
-
-        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-
-        $result = curl_exec($curl);
-
-        curl_close($curl);
-
-        return $result;
     }
 
     /**
@@ -140,13 +92,13 @@ class Nightbot
      */
     public function getChannel(string $token)
     {
-        $headers = [
-            'Authorization: Bearer ' . $token
-        ];
+        $response = $this->client->request('GET', 'channel', [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+            ]
+        ])->getBody();
 
-        $result = $this->curlRequest('GET', 'https://api.nightbot.tv/1/channel', [], $headers);
-
-        return json_decode($result, true);
+        return json_decode($response->getContents(), true);
     }
 
     /**
@@ -159,13 +111,13 @@ class Nightbot
      */
     public function joinChannel(string $token)
     {
-        $headers = [
-            'Authorization: Bearer ' . $token
-        ];
+        $response = $this->client->request('POST', 'channel/join', [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+            ]
+        ])->getBody();
 
-        $result = $this->curlRequest('POST', 'https://api.nightbot.tv/1/channel/join', [], $headers);
-
-        return json_decode($result, true);
+        return json_decode($response->getContents(), true);
     }
 
     /**
@@ -178,13 +130,13 @@ class Nightbot
      */
     public function partChannel(string $token)
     {
-        $headers = [
-            'Authorization: Bearer ' . $token
-        ];
+        $response = $this->client->request('POST', 'channel/part', [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+            ]
+        ])->getBody();
 
-        $result = $this->curlRequest('POST', 'https://api.nightbot.tv/1/channel/part', [], $headers);
-
-        return json_decode($result, true);
+        return json_decode($response->getContents(), true);
     }
 
     /**
@@ -198,17 +150,16 @@ class Nightbot
      */
     public function sendChannelMessage(string $token, string $message)
     {
-        $headers = [
-            'Authorization: Bearer ' . $token
-        ];
+        $response = $this->client->request('POST', 'channel/send', [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+            ],
+            'form_params' => [
+                'message' => $message,
+            ]
+        ])->getBody();
 
-        $parameters = [
-            'message' => $message,
-        ];
-
-        $result = $this->curlRequest('POST', 'https://api.nightbot.tv/1/channel/send', $parameters, $headers);
-
-        return json_decode($result, true);
+        return json_decode($response->getContents(), true);
     }
 
     /**
@@ -229,13 +180,13 @@ class Nightbot
      */
     public function getTimers(string $token)
     {
-        $headers = [
-            'Authorization: Bearer ' . $token
-        ];
+        $response = $this->client->request('GET', 'timers', [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+            ]
+        ])->getBody();
 
-        $result = $this->curlRequest('GET', 'https://api.nightbot.tv/1/timers', [], $headers);
-
-        return json_decode($result, true);
+        return json_decode($response->getContents(), true);
     }
 
     /**
@@ -262,13 +213,14 @@ class Nightbot
      */
     public function addNewTimer(string $token, array $parameters)
     {
-        $headers = [
-            'Authorization: Bearer ' . $token
-        ];
+        $response = $this->client->request('POST', 'timers', [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+            ],
+            'form_params' => $parameters,
+        ])->getBody();
 
-        $result = $this->curlRequest('POST', 'https://api.nightbot.tv/1/timers', $parameters, $headers);
-
-        return json_decode($result, true);
+        return json_decode($response->getContents(), true);
     }
 
     /**
@@ -282,13 +234,13 @@ class Nightbot
      */
     public function getTimerById(string $token, string $id)
     {
-        $headers = [
-            'Authorization: Bearer ' . $token
-        ];
+        $response = $this->client->request('POST', "timers/{$id}", [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+            ],
+        ])->getBody();
 
-        $result = $this->curlRequest('POST', 'https://api.nightbot.tv/1/timers/' . $id, [], $headers);
-
-        return json_decode($result, true);
+        return json_decode($response->getContents(), true);
     }
 
     /**
@@ -315,13 +267,14 @@ class Nightbot
      */
     public function editTimerById(string $token, string $id, array $parameters)
     {
-        $headers = [
-            'Authorization: Bearer ' . $token
-        ];
+        $response = $this->client->request('PUT', "timers/{$id}", [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+            ],
+            'form_params' => $parameters,
+        ])->getBody();
 
-        $result = $this->curlRequest('PUT', 'https://api.nightbot.tv/1/timers/' . $id, $parameters, $headers);
-
-        return json_decode($result, true);
+        return json_decode($response->getContents(), true);
     }
 
     /**
@@ -335,13 +288,13 @@ class Nightbot
      */
     public function deleteTimerById(string $token, string $id)
     {
-        $headers = [
-            'Authorization: Bearer ' . $token
-        ];
+        $response = $this->client->request('DELETE', "timers/{$id}", [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+            ],
+        ])->getBody();
 
-        $result = $this->curlRequest('DELETE', 'https://api.nightbot.tv/1/timers/' . $id, [], $headers);
-
-        return json_decode($result, true);
+        return json_decode($response->getContents(), true);
     }
 
 
