@@ -2,29 +2,14 @@
 
 return [
 
-    /**
-     *
-     */
     'contact_email' => 'androidbeet@gmail.com',
 
-    /**
-     *
-     */
     'client_id' => env('NIGHTBOT_CLIENT_ID', ''),
 
-    /**
-     *
-     */
     'secret_id' => env('NIGHTBOT_SECRET_ID', ''),
 
-    /**
-     *
-     */
     'redirect_url' => env('NIGHTBOT_REDIRECT_URL', ''),
 
-    /**
-     *
-     */
     'scopes' => [
         'channel',
         'channel_send',
@@ -39,18 +24,9 @@ return [
         'timers',
     ],
 
-    /**
-     *
-     */
     'state' => env('NIGHTBOT_STATE', 'yor_any_string'),
 
-    /**
-     *
-     */
     'grant_type' => 'authorization_code',
 
-    /**
-     *
-     */
     'response_type' => 'code',
 ];

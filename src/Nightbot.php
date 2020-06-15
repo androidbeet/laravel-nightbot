@@ -11,27 +11,27 @@ class Nightbot
     public function __construct()
     {
         $this->client = new \GuzzleHttp\Client([
-            'base_uri' => 'https://api.nightbot.tv/1/'
+            'base_uri' => 'https://api.nightbot.tv/1/',
         ]);
     }
 
     /**
      * Return url for Nightbot OAuth2 authorization
-     * Step 2 -> https://api-docs.nightbot.tv/#authorization-code-flow
+     * Step 2 -> https://api-docs.nightbot.tv/#authorization-code-flow.
      *
      * @param bool $withState
      * @return string
      */
     public function getAuthURL($withState = true)
     {
-        $url = 'https://api.nightbot.tv/oauth2/authorize' .
-            '?response_type=' . config('nightbot.response_type') .
-            '&client_id=' . config('nightbot.client_id') .
-            '&redirect_uri=' . urlencode(config('nightbot.redirect_url')) .
-            '&scope=' . implode(' ', config('nightbot.scopes'));
+        $url = 'https://api.nightbot.tv/oauth2/authorize'.
+            '?response_type='.config('nightbot.response_type').
+            '&client_id='.config('nightbot.client_id').
+            '&redirect_uri='.urlencode(config('nightbot.redirect_url')).
+            '&scope='.implode(' ', config('nightbot.scopes'));
 
         if ($withState) {
-            $url .= '&state=' . config('nightbot.state');
+            $url .= '&state='.config('nightbot.state');
         }
 
         return $url;
@@ -39,7 +39,7 @@ class Nightbot
 
     /**
      * Return access token with other data
-     * Step 4 -> https://api-docs.nightbot.tv/#authorization-code-flow
+     * Step 4 -> https://api-docs.nightbot.tv/#authorization-code-flow.
      *
      * @param string $code
      * @return array
@@ -62,7 +62,7 @@ class Nightbot
     }
 
     /**
-     * GET OAuth2 Access Token from Database
+     * GET OAuth2 Access Token from Database.
      *
      * @param int $id
      * @return mixed
@@ -79,13 +79,13 @@ class Nightbot
      *  CHANNELS
      *  https://api-docs.nightbot.tv/#channel
      *  The channel methods allow you to get information about the channel as well as join and part the bot.
-     * ==============================================================================================================
+     * ==============================================================================================================.
      */
 
     /**
      * Gets the API user’s channel information
      * Scope -> channel
-     * https://api-docs.nightbot.tv/#get-channel
+     * https://api-docs.nightbot.tv/#get-channel.
      *
      * @param string $token
      * @return array
@@ -94,8 +94,8 @@ class Nightbot
     {
         $response = $this->client->request('GET', 'channel', [
             'headers' => [
-                'Authorization' => 'Bearer ' . $token,
-            ]
+                'Authorization' => 'Bearer '.$token,
+            ],
         ])->getBody();
 
         return json_decode($response->getContents(), true);
@@ -104,7 +104,7 @@ class Nightbot
     /**
      * Makes Nightbot join (enter) the current user’s channel
      * Scope -> channel
-     * https://api-docs.nightbot.tv/#join-channel
+     * https://api-docs.nightbot.tv/#join-channel.
      *
      * @param string $token
      * @return array
@@ -113,8 +113,8 @@ class Nightbot
     {
         $response = $this->client->request('POST', 'channel/join', [
             'headers' => [
-                'Authorization' => 'Bearer ' . $token,
-            ]
+                'Authorization' => 'Bearer '.$token,
+            ],
         ])->getBody();
 
         return json_decode($response->getContents(), true);
@@ -123,7 +123,7 @@ class Nightbot
     /**
      * Makes Nightbot part (leave) the current user’s channel
      * Scope -> channel
-     * https://api-docs.nightbot.tv/#part-channel
+     * https://api-docs.nightbot.tv/#part-channel.
      *
      * @param string $token
      * @return array
@@ -132,8 +132,8 @@ class Nightbot
     {
         $response = $this->client->request('POST', 'channel/part', [
             'headers' => [
-                'Authorization' => 'Bearer ' . $token,
-            ]
+                'Authorization' => 'Bearer '.$token,
+            ],
         ])->getBody();
 
         return json_decode($response->getContents(), true);
@@ -142,7 +142,7 @@ class Nightbot
     /**
      * Makes Nightbot send a message to the channel
      * Scope -> channel_send
-     * https://api-docs.nightbot.tv/#send-channel-message
+     * https://api-docs.nightbot.tv/#send-channel-message.
      *
      * @param string $token
      * @param string $message
@@ -152,11 +152,11 @@ class Nightbot
     {
         $response = $this->client->request('POST', 'channel/send', [
             'headers' => [
-                'Authorization' => 'Bearer ' . $token,
+                'Authorization' => 'Bearer '.$token,
             ],
             'form_params' => [
                 'message' => $message,
-            ]
+            ],
         ])->getBody();
 
         return json_decode($response->getContents(), true);
@@ -167,13 +167,13 @@ class Nightbot
      *  TIMERS
      *  https://api-docs.nightbot.tv/#timers
      *  The timers methods allow you to view, add, edit, and remove channel timers.
-     * ==============================================================================================================
+     * ==============================================================================================================.
      */
 
     /**
      * Gets the current API user’s timers list
      * Scope -> timers
-     * https://api-docs.nightbot.tv/#part-channel
+     * https://api-docs.nightbot.tv/#part-channel.
      *
      * @param string $token
      * @return array
@@ -182,8 +182,8 @@ class Nightbot
     {
         $response = $this->client->request('GET', 'timers', [
             'headers' => [
-                'Authorization' => 'Bearer ' . $token,
-            ]
+                'Authorization' => 'Bearer '.$token,
+            ],
         ])->getBody();
 
         return json_decode($response->getContents(), true);
@@ -192,7 +192,7 @@ class Nightbot
     /**
      * Adds a new timer to the current user’s channel
      * Scope -> timers
-     * https://api-docs.nightbot.tv/#add-new-timer
+     * https://api-docs.nightbot.tv/#add-new-timer.
      *
      * @param string $token
      * @param array $parameters
@@ -215,7 +215,7 @@ class Nightbot
     {
         $response = $this->client->request('POST', 'timers', [
             'headers' => [
-                'Authorization' => 'Bearer ' . $token,
+                'Authorization' => 'Bearer '.$token,
             ],
             'form_params' => $parameters,
         ])->getBody();
@@ -226,7 +226,7 @@ class Nightbot
     /**
      * Looks up a timer by id
      * Scope -> timers
-     * https://api-docs.nightbot.tv/#get-timer-by-id
+     * https://api-docs.nightbot.tv/#get-timer-by-id.
      *
      * @param string $token
      * @param string $id
@@ -236,7 +236,7 @@ class Nightbot
     {
         $response = $this->client->request('POST', "timers/{$id}", [
             'headers' => [
-                'Authorization' => 'Bearer ' . $token,
+                'Authorization' => 'Bearer '.$token,
             ],
         ])->getBody();
 
@@ -246,7 +246,7 @@ class Nightbot
     /**
      * Edits a timer by its id.
      * Scope -> timers
-     * https://api-docs.nightbot.tv/#edit-timer-by-id
+     * https://api-docs.nightbot.tv/#edit-timer-by-id.
      *
      * @param string $token
      * @param array $parameters
@@ -269,7 +269,7 @@ class Nightbot
     {
         $response = $this->client->request('PUT', "timers/{$id}", [
             'headers' => [
-                'Authorization' => 'Bearer ' . $token,
+                'Authorization' => 'Bearer '.$token,
             ],
             'form_params' => $parameters,
         ])->getBody();
@@ -280,7 +280,7 @@ class Nightbot
     /**
      * Deletes a timer by id
      * Scope -> timers
-     * https://api-docs.nightbot.tv/#get-timer-by-id
+     * https://api-docs.nightbot.tv/#get-timer-by-id.
      *
      * @param string $token
      * @param string $id
@@ -290,12 +290,10 @@ class Nightbot
     {
         $response = $this->client->request('DELETE', "timers/{$id}", [
             'headers' => [
-                'Authorization' => 'Bearer ' . $token,
+                'Authorization' => 'Bearer '.$token,
             ],
         ])->getBody();
 
         return json_decode($response->getContents(), true);
     }
-
-
 }
