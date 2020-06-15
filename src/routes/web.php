@@ -1,7 +1,6 @@
 <?php
 
 Route::group(['namespace' => 'Androidbeet\Nightbot\Http\Controllers'], function () {
-
     Route::get('nightbot/auth', 'NightbotController@showAuthPage')
         ->name('nightbot.auth');
 
@@ -10,6 +9,4 @@ Route::group(['namespace' => 'Androidbeet\Nightbot\Http\Controllers'], function 
 
     Route::get('nightbot/twitch/success', 'NightbotController@showTwitchSuccessPage')
         ->name('nightbot.twitch.success');
-
 });
-

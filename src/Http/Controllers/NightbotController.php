@@ -3,11 +3,10 @@
 namespace Androidbeet\Nightbot\Http\Controllers;
 
 use Androidbeet\Nightbot\Facades\Nightbot;
+use Androidbeet\Nightbot\Models\NightbotToken;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use Androidbeet\Nightbot\Models\NightbotToken;
-
 
 class NightbotController extends Controller
 {
@@ -19,13 +18,13 @@ class NightbotController extends Controller
     }
 
     /**
-     * Show Auth Page
+     * Show Auth Page.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function showAuthPage()
     {
-          $token = $this->token::id(3);
+        $token = $this->token::id(3);
 
         $url = Nightbot::getAuthURL();
 
@@ -35,7 +34,7 @@ class NightbotController extends Controller
     }
 
     /**
-     * Show Twitch Success Page
+     * Show Twitch Success Page.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -45,7 +44,7 @@ class NightbotController extends Controller
     }
 
     /**
-     * Catch and Store data from callback
+     * Catch and Store data from callback.
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
